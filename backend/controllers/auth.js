@@ -82,3 +82,17 @@ exports.login = async (req,res)=>{
             res.status(500).send('Server Error');
     }
 }
+
+
+///Logout functionailty---
+
+exports.logout=async (req,res)=>{
+    res.clearCookie("token")
+    res.json({
+        message:"Logged Out Successfully"
+    });
+}
+
+exports.requireLoggedin=expressJwt({
+    secret:config.get('jwtSecret')
+})
