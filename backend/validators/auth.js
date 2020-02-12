@@ -5,3 +5,8 @@ exports.userSignupValidator = [
     check('email').isEmail().withMessage("Must be a valid Email Address"),
     check('password').isLength({ min: 10 }).withMessage("Password must be at least 10 characters long")
 ];
+
+exports.userLoginValidator = [
+    check('email').isEmail().withMessage("Must be a valid Email Address"),
+    check('password').isLength({ min: 10 }).withMessage("Password must be at least 10 characters long")
+];

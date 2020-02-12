@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const newUser = {
     username: {
-        typre: String,
+        type: String,
         trim: true,
         required: true,
         max: 32,
@@ -10,13 +10,13 @@ const newUser = {
         lowercase: true
     },
     name: {
-        typre: String,
+        type: String,
         trim: true,
         required: true,
         max: 32
     },
     email: {
-        typre: String,
+        type: String,
         trim: true,
         required: true,
         max: 32,
