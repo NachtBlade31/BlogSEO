@@ -104,7 +104,7 @@ module.exports =
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-var _jsxFileName = "C:\\Users\\kshit\\OneDrive\\Desktop\\Web Development\\BlogSEO\\frontend\\components\\Layout.js";
+var _jsxFileName = "C:\\Users\\Z003WJ6J\\Desktop\\Website\\seoblog\\frontend\\components\\Layout.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -148,7 +148,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Layout */ "./components/Layout.js");
-var _jsxFileName = "C:\\Users\\kshit\\OneDrive\\Desktop\\Web Development\\BlogSEO\\frontend\\pages\\index.js";
+var _jsxFileName = "C:\\Users\\Z003WJ6J\\Desktop\\Website\\seoblog\\frontend\\pages\\index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -180,7 +180,7 @@ const Index = () => {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\kshit\OneDrive\Desktop\Web Development\BlogSEO\frontend\pages\index.js */"./pages/index.js");
+module.exports = __webpack_require__(/*! C:\Users\Z003WJ6J\Desktop\Website\seoblog\frontend\pages\index.js */"./pages/index.js");
 
 
 /***/ }),

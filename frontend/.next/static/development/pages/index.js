@@ -11,7 +11,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-var _jsxFileName = "C:\\Users\\kshit\\OneDrive\\Desktop\\Web Development\\BlogSEO\\frontend\\components\\Layout.js";
+var _jsxFileName = "C:\\Users\\Z003WJ6J\\Desktop\\Website\\seoblog\\frontend\\components\\Layout.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -42,10 +42,10 @@ var Layout = function Layout(_ref) {
 
 /***/ }),
 
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=C%3A%5CUsers%5Ckshit%5COneDrive%5CDesktop%5CWeb%20Development%5CBlogSEO%5Cfrontend%5Cpages%5Cindex.js!./":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=C%3A%5CUsers%5Ckshit%5COneDrive%5CDesktop%5CWeb%20Development%5CBlogSEO%5Cfrontend%5Cpages%5Cindex.js ***!
-  \******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=C%3A%5CUsers%5CZ003WJ6J%5CDesktop%5CWebsite%5Cseoblog%5Cfrontend%5Cpages%5Cindex.js!./":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=C%3A%5CUsers%5CZ003WJ6J%5CDesktop%5CWebsite%5Cseoblog%5Cfrontend%5Cpages%5Cindex.js ***!
+  \************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -88,7 +88,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Layout */ "./components/Layout.js");
-var _jsxFileName = "C:\\Users\\kshit\\OneDrive\\Desktop\\Web Development\\BlogSEO\\frontend\\pages\\index.js";
+var _jsxFileName = "C:\\Users\\Z003WJ6J\\Desktop\\Website\\seoblog\\frontend\\pages\\index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -114,13 +114,13 @@ var Index = function Index() {
 /***/ }),
 
 /***/ 1:
-/*!**********************************************************************************************************************************************************************!*\
-  !*** multi next-client-pages-loader?page=%2F&absolutePagePath=C%3A%5CUsers%5Ckshit%5COneDrive%5CDesktop%5CWeb%20Development%5CBlogSEO%5Cfrontend%5Cpages%5Cindex.js ***!
-  \**********************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************!*\
+  !*** multi next-client-pages-loader?page=%2F&absolutePagePath=C%3A%5CUsers%5CZ003WJ6J%5CDesktop%5CWebsite%5Cseoblog%5Cfrontend%5Cpages%5Cindex.js ***!
+  \****************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absolutePagePath=C%3A%5CUsers%5Ckshit%5COneDrive%5CDesktop%5CWeb%20Development%5CBlogSEO%5Cfrontend%5Cpages%5Cindex.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=C%3A%5CUsers%5Ckshit%5COneDrive%5CDesktop%5CWeb%20Development%5CBlogSEO%5Cfrontend%5Cpages%5Cindex.js!./");
+module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absolutePagePath=C%3A%5CUsers%5CZ003WJ6J%5CDesktop%5CWebsite%5Cseoblog%5Cfrontend%5Cpages%5Cindex.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=C%3A%5CUsers%5CZ003WJ6J%5CDesktop%5CWebsite%5Cseoblog%5Cfrontend%5Cpages%5Cindex.js!./");
 
 
 /***/ }),
