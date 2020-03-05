@@ -13,6 +13,11 @@ const authRoutes = require('./routes/auth');
 //app
 const app = express()
 
+//cors
+if (process.env.NODE_ENV == 'development') {
+    app.use(cors({ origin: `${process.env.CLIENT_URL}` }))
+}
+
 //DB Connection
 connectDB();
 
@@ -23,10 +28,6 @@ app.use(cookieParser())
 
 
 
-//cors
-if (process.env.NODE_ENV == 'development') {
-    app.use(cors({ origin: `${process.env.CLIENT_URL}` }))
-}
 
 //Routes Middleware
 app.use('/api', blogRoutes);
