@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import { signup, isAuth } from '../../actions/auth';
+import { login, authenticate, isAuth } from '../../actions/auth';
 import Router from 'next/router';
 
-const SignupComponent = () => {
+const LoginComponent = () => {
 
     useEffect(() => {
         isAuth() && Router.push(`/`);
     }, []);
 
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
         password: '',
         error: '',
@@ -31,23 +30,21 @@ const SignupComponent = () => {
         // console.table({ name, email, password, error, loading, showForm })
 
         setFormData({ ...formData, loading: true, error: false, loading: false })
-        const user = { name, email, password }
-        signup(user)
+        const user = { email, password }
+        login(user)
             .then(data => {
                 if (data.error) {
                     setFormData({ ...formData, error: data.error })
                 }
                 else {
-                    setFormData({
-                        ...formData,
-                        name: '',
-                        email: '',
-                        password: '',
-                        error: '',
-                        loading: false,
-                        message: data.message,
-                        showForm: false
+                    //save user token to cookie
+                    //save user info to localstorage
+                    //authenticate user
+
+                    authenticate(data, () => {
+                        Router.push(`/`);
                     })
+
                 }
             })
     };
@@ -57,13 +54,9 @@ const SignupComponent = () => {
     const showMessage = () => (message ? <div className='alert alert-info'>{message}</div> : '');
 
 
-    const signupForm = () => {
+    const loginForm = () => {
         return (
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <input name='name' value={name} onChange={handleChange} type="text" className="form-control" placeholder="Enter Your Name" />
-                </div>
-
                 <div className="form-group">
                     <input name='email' value={email} onChange={handleChange} type="email" className="form-control" placeholder="Enter Your Email" />
                 </div>
@@ -73,19 +66,20 @@ const SignupComponent = () => {
                 </div>
 
                 <div>
-                    <button className="btn btn-primary">Signup</button>
+                    <button className="btn btn-primary">Login</button>
                 </div>
             </form>
         );
 
     };
-    return (<React.Fragment>
-        {showError()}
-        {showLoading()}
-        {showMessage()}
-        {showForm && signupForm()}</React.Fragment>)
+    return (
+        <React.Fragment>
+            {showError()}
+            {showLoading()}
+            {showMessage()}
+            {showForm && loginForm()}</React.Fragment>)
 
 };
 
 
-export default SignupComponent
+export default LoginComponent

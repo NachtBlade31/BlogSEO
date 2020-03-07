@@ -11,8 +11,6 @@ const Signup = () => {
                     <SignupComponent />
                 </div>
             </div>
-
-
         </Layout>
 
     )
