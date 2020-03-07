@@ -12,7 +12,7 @@ const SignupComponent = () => {
         showForm: true
     })
 
-    const { name, email, password, error, loading, showForm } = formData;
+    const { name, email, password, error, loading, showForm, message } = formData;
 
     function handleChange(e) {
         setFormData({ ...formData, error: false, [e.target.name]: e.target.value })
@@ -24,7 +24,7 @@ const SignupComponent = () => {
 
         // console.table({ name, email, password, error, loading, showForm })
 
-        setFormData({ ...formData, loading: true, error: false, loading: false, })
+        setFormData({ ...formData, loading: true, error: false, loading: false })
         const user = { name, email, password }
         signup(user)
             .then(data => {
@@ -45,6 +45,10 @@ const SignupComponent = () => {
                 }
             })
     };
+
+    const showLoading = () => (loading ? <div className='alert alert-info'>Loading....</div> : '');
+    const showError = () => (error ? <div className='alert alert-danger'>{error}</div> : '');
+    const showMessage = () => (message ? <div className='alert alert-info'>{message}</div> : '');
 
 
     const signupForm = () => {
@@ -69,7 +73,11 @@ const SignupComponent = () => {
         );
 
     };
-    return <React.Fragment>{signupForm()}</React.Fragment>
+    return (<React.Fragment>
+        {showError()}
+        {showLoading()}
+        {showMessage()}
+        {showForm && signupForm()}</React.Fragment>)
 
 };
 
