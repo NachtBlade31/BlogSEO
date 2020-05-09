@@ -96,3 +96,36 @@ exports.logout = async (req, res) => {
 exports.requireLoggedin = expressJwt({
     secret: config.get('jwtSecret')
 })
+
+exports.authMiddleWare = (req, res, next) => {
+    const authUserId = req.user.user.id
+    User.findById({ _id: authUserId }).exec((err, user) => {
+        if (err || !user) {
+            return res.status(400).json({
+                error: 'User not Found'
+            })
+        }
+
+        req.profile = user
+        next()
+    })
+}
+
+exports.adminMiddleWare = (req, res, next) => {
+    const adminUserId = req.user.user.id
+    User.findById({ _id: adminUserId }).exec((err, user) => {
+        if (err || !user) {
+            return res.status(400).json({
+                error: 'User not Found'
+            })
+        }
+        if (user.role !== 1) {
+            return res.status(400).json({
+                error: 'Unauthorised content'
+            })
+        }
+
+        req.profile = user
+        next()
+    })
+}

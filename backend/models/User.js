@@ -37,7 +37,7 @@ const newUser = {
     },
     role: {
         type: Number,
-        trim: true
+        default: 0
     },
     photo: {
         data: Buffer,
