@@ -13,7 +13,7 @@ const newTag = {
     }
 }
 
-const TagSchema = new mongoose.Schema(newTag, { timestamp: true });
+const TagSchema = new mongoose.Schema(newTag, { timestamps: true });
 
 const Tag = mongoose.model("Tag", TagSchema);
 module.exports = Tag;
