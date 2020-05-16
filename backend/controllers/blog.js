@@ -112,12 +112,12 @@ exports.list = (req, res) => {
 }
 
 exports.listAllBlogsCategoriesTags = (req, res) => {
-    let limit = (req.body.limit) ? parseInt(req.body.limit) : 10
-    let skip = (req.body.skip) ? parseInt(req.body.skip) : 0
+    let limit = req.body.limit ? parseInt(req.body.limit) : 10;
+    let skip = req.body.skip ? parseInt(req.body.skip) : 0;
 
-    let blogs
-    let categories
-    let tags
+    let blogs;
+    let categories;
+    let tags;
 
     Blog.find({})
         .populate('categories', '_id name slug')
@@ -131,33 +131,31 @@ exports.listAllBlogsCategoriesTags = (req, res) => {
             if (err) {
                 return res.json({
                     error: errorHandler(err)
-                })
+                });
             }
-            blogs = data
-            //get all categories
+            blogs = data; // blogs
+            // get all categories
             Category.find({}).exec((err, c) => {
                 if (err) {
                     return res.json({
                         error: errorHandler(err)
-                    })
+                    });
                 }
-                categories = c //all the categoreis
-
-            })
-
-            Tag.find({}).exec((err, c) => {
-                if (err) {
-                    return res.json({
-                        error: errorHandler(err)
-                    })
-                }
-                tags = c //all the tags
-                // rreturn all blogs categoris and tags
-                res.json({ blogs, categories, tags, size: blogs.length })
-
-            })
-        })
-}
+                categories = c; // categories
+                // get all tags
+                Tag.find({}).exec((err, t) => {
+                    if (err) {
+                        return res.json({
+                            error: errorHandler(err)
+                        });
+                    }
+                    tags = t;
+                    // return all blogs categories tags
+                    res.json({ blogs, categories, tags, size: blogs.length });
+                });
+            });
+        });
+};
 
 exports.read = (req, res) => {
     const slug = req.params.slug.toLowerCase()
@@ -264,4 +262,23 @@ exports.photo = (req, res) => {
             res.set('Content-Type', blog.photo.contentType)
             return res.send(blog.photo.data)
         })
+}
+
+exports.listRelated = (req, res) => {
+    let limit = req.body.limit ? parseInt(req.body.limit) : 5
+
+    const { _id, categories } = req.body.blog
+    Blog.find({ _id: { $ne: _id }, categories: { $in: categories } })
+        .limit(limit)
+        .populate('postedBy', '_id name profile')
+        .select('title slug excerpt postedBy ')
+        .exec((err, blogs) => {
+            if (err) {
+                return res.status(400).json({
+                    error: 'Blogs not found'
+                })
+            }
+            res.json(blogs)
+        })
+
 }
