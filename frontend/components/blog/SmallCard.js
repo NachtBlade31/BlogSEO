@@ -16,7 +16,7 @@ const SmallCard = ({ blog }) => {
             <div className="card-body">
 
                 <section>
-                    <Link href={`/blog/${blog.slug}`}>
+                    <Link href={`/blogs/${blog.slug}`}>
                         <a>
                             <h5 className="card-title" >{blog.title}</h5>
                         </a>
@@ -28,10 +28,9 @@ const SmallCard = ({ blog }) => {
 
             <div className="card-body">
 
-                Posted {moment(blog.updatedAt).fromNow()} by  {' '}
-                <Link href={`/`}>
+                Posted {moment(blog.updatedAt).fromNow()} by  {' '} <Link href={`/profile/${blog.postedBy.username}`}>
                     <a className="float-right">
-                        {blog.postedBy.name}
+                        {blog.postedBy.username}
                     </a>
                 </Link>
             </div>
