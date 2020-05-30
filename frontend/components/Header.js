@@ -67,6 +67,17 @@ const Header = (props) => {
                             }>
                                 Logout</NavLink>
                         </NavItem>)}
+
+                        <NavItem>
+                            <Link href="/user/crud/blog" >
+                                <NavLink className="btn btn-primary text-light" style={{ cursor: 'pointer' }}>Write a Blog</NavLink>
+                            </Link>
+                        </NavItem>
+                        <NavItem>
+                            <Link href="/contact" >
+                                <NavLink style={{ cursor: 'pointer' }}>Contact us</NavLink>
+                            </Link>
+                        </NavItem>
                     </Nav>
                     <NavbarText>Simple Text</NavbarText>
                 </Collapse>

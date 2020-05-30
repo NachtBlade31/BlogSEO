@@ -1,9 +1,11 @@
 const User = require('../models/User')
+const Blog = require('../models/Blog')
 const shortId = require('shortid');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const config = require('config');
+const { errorHandler } = require('../helpers/dbErrorHandler')
 //Sign Up controller----Create a New Account
 exports.signup = async (req, res) => {
     const { name, email, password } = req.body
@@ -64,13 +66,13 @@ exports.login = async (req, res) => {
         }
 
         jwt.sign(payload, config.get('jwtSecret'),
-            { expiresIn: 36000 },
+            { expiresIn: '1d' },
             (err, token) => {
                 if (err) {
                     throw err;
                 }
                 else {
-                    res.cookie('token', token, { expiresIn: 36000 })
+                    res.cookie('token', token, { expiresIn: '1d' })
                     const { _id, name, username, email, role } = user
                     res.json({ token, user: { _id, name, username, email, role } });
                 }
@@ -127,5 +129,23 @@ exports.adminMiddleWare = (req, res, next) => {
 
         req.profile = user
         next()
+    })
+}
+
+exports.canUpdateDelete = (req, res, next) => {
+    const slug = req.params.slug.toLowerCase()
+    Blog.findOne({ slug }).exec((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            })
+        }
+        let authorizedUser = data.postedBy._id.toString() === req.profile._id.toString()
+        if (!authorizedUser) {
+            return res.status(400).json({
+                error: 'You are not authorsed to edit this'
+            })
+        }
+        next();
     })
 }
