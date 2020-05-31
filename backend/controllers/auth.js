@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const config = require('config');
 const { errorHandler } = require('../helpers/dbErrorHandler')
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 //Sign Up controller----Create a New Account
 exports.signup = async (req, res) => {
     const { name, email, password } = req.body
@@ -148,4 +150,39 @@ exports.canUpdateDelete = (req, res, next) => {
         }
         next();
     })
+}
+
+// forgetPassword, resetPassword 
+exports.forgetPassword = (req, res) => {
+    const { email } = req.body
+    User.findOne({ email }, (err, user) => {
+        if (err || !user) {
+            return res.status(401).json({
+                error: "User with that email does not exist"
+            })
+        }
+
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_RESET_PASSWORD, { expiresIn: '10m' })
+        //email
+
+    })
+}
+
+exports.resetPassword = (req, res) => {
+    //
+    const emailData = {
+        to: process.env.EMAIL_TO,
+        from: email,
+        subject: `Contact form-${process.env.APP_NAME}`,
+        text: `Email received from contact from \n Sender Name: ${name} \n Sender Email :${email} \n Sender Message: ${message} `,
+        html: `
+        <h4>Email received fro Contact Form</h4>
+        <p> Sender Name: ${name}</p>
+        <p> Sender Email: ${email}</p>
+        <p> Sender Message: ${message}</p>
+        <hr />
+        <p>This email may contain sensitive information</p>
+        <p>https://seoblog.com</p>
+        `
+    }
 }
