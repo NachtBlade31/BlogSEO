@@ -5,7 +5,7 @@ exports.contactForm = (req, res) => {
 
     const emailData = {
         to: process.env.EMAIL_TO,
-        from: email,
+        from: process.env.EMAIL_FROM,
         subject: `Contact form-${process.env.APP_NAME}`,
         text: `Email received from contact from \n Sender Name: ${name} \n Sender Email :${email} \n Sender Message: ${message} `,
         html: `
@@ -34,7 +34,7 @@ exports.contactBlogAuthorForm = (req, res) => {
     let mailList = [process.env.EMAIL_TO, authorEmail]
     const emailData = {
         to: mailList,
-        from: email,
+        from: process.env.EMAIL_FROM,
         subject: `Someone messaged you from ${process.env.APP_NAME}`,
         text: `Email received from contact from \n Sender Name: ${name} \n Sender Email :${email} \n Sender Message: ${message} `,
         html: `

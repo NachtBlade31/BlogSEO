@@ -11,7 +11,7 @@ exports.userLoginValidator = [
     check('password').isLength({ min: 10 }).withMessage("Password must be at least 10 characters long")
 ];
 
-exports.forgePasswordValidator = [
+exports.forgetPasswordValidator = [
     check('email').not().isEmpty().isEmail().withMessage("Must be a valid Email Address")
 ];
 

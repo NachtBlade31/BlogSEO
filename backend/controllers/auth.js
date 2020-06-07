@@ -5,41 +5,86 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const config = require('config');
+const _ = require('lodash')
 const { errorHandler } = require('../helpers/dbErrorHandler')
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 //Sign Up controller----Create a New Account
-exports.signup = async (req, res) => {
+
+exports.preSignup = async (req, res) => {
     const { name, email, password } = req.body
-    let user = await User.findOne({ email });
-    if (user) {
-        return res.status(400).json({ error: 'User already exist' });
+    await User.findOne({ email: email.toLowerCase() }, (err, user) => {
+        if (user) {
+            return res.status(400).json({
+                error: 'Email is taken'
+            })
+        }
+
+        const token = jwt.sign({ name, email, password }, config.get('jwt_account_activation_secret'), { expiresIn: '10m' })
+
+        //email
+        const emailData = {
+            to: email,
+            from: process.env.EMAIL_FROM,
+            subject: `Account activation Link`,
+            html: `
+            <p> Please use the following link to activate your account </p>
+            <p> ${process.env.CLIENT_URL}/auth/account/activate/${token}</p>
+            <hr />
+            <p>This email may contain sensitive information</p>
+            <p>https://seoblog.com</p>
+            `
+        }
+
+        sgMail.send(emailData)
+            .then(sent => {
+                return res.json({
+                    message: `Email has been sent to ${email}. Please check your Inbox.`
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    })
+}
+
+
+exports.signup = (req, res) => {
+    const token = req.body.token
+    if (token) {
+        jwt.verify(token, config.get('jwt_account_activation_secret'), async function (err, decoded) {
+            if (err) {
+                return res.status(401).json({
+                    error: "Expired link.Signup Again"
+                })
+            }
+
+            let { name, email, password } = jwt.decode(token)
+            const username = shortId.generate()
+            const profile = `${process.env.CLIENT_URL}/profile/${username}`
+            // Encrypt password and save user
+            const salt = await bcrypt.genSalt(10);
+            password = await bcrypt.hash(password, salt);
+
+            const user = new User({ name, email, password, profile, username })
+            user.save((err, user) => {
+                if (err) {
+                    return res.status(400).json({
+                        error: errorHandler(err)
+                    })
+                }
+                return res.json({
+                    message: "Sign Up Success.Please SignIn"
+                })
+            })
+        })
     }
 
-    const username = shortId.generate()
-    const profile = `${process.env.CLIENT_URL}/profile/${username}`
-
-    //create  the user
-    user = new User({
-        name,
-        email,
-        password,
-        username,
-        profile
-    });
-
-
-    //Encrypt password and save user
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-    await user.save((err, success) => {
-        if (err) {
-            return res.status(400).json({ errors: err });
-        }
-        //res.json({user:success})
-        res.json({ message: "Sign up success, Please Sign In" })
-    });
-
+    else {
+        return res.json({
+            message: "Something Went Wrong.Try again"
+        })
+    }
 }
 
 //Sign In controller----Log in into your account
@@ -164,25 +209,70 @@ exports.forgetPassword = (req, res) => {
 
         const token = jwt.sign({ _id: user._id }, process.env.JWT_RESET_PASSWORD, { expiresIn: '10m' })
         //email
+        const emailData = {
+            to: process.env.EMAIL_TO,
+            from: process.env.EMAIL_FROM,
+            subject: `Password reset link`,
+            html: `
+            <p> Please use the following link to reset the password: </p>
+            <p> ${process.env.CLIENT_URL}/auth/password/reset/${token}</p>
+            <hr />
+            <p>This email may contain sensitive information</p>
+            <p>https://seoblog.com</p>
+            `
+        }
+        return user.updateOne({ resetPasswordLink: token }, (err, success) => {
+            if (err) {
+                return res.json({ error: errorHandler(err) })
+            }
+            else {
+                sgMail.send(emailData)
+                    .then(sent => {
+                        return res.json({
+                            message: `Email has been sent to ${email}.Follow the instruction to reset your password. Link expires in 10mins `
+                        })
+                    })
+                    .catch((error) => {
+                        console.log(error.response.body)
+                    })
 
+            }
+        })
     })
 }
 
 exports.resetPassword = (req, res) => {
     //
-    const emailData = {
-        to: process.env.EMAIL_TO,
-        from: email,
-        subject: `Contact form-${process.env.APP_NAME}`,
-        text: `Email received from contact from \n Sender Name: ${name} \n Sender Email :${email} \n Sender Message: ${message} `,
-        html: `
-        <h4>Email received fro Contact Form</h4>
-        <p> Sender Name: ${name}</p>
-        <p> Sender Email: ${email}</p>
-        <p> Sender Message: ${message}</p>
-        <hr />
-        <p>This email may contain sensitive information</p>
-        <p>https://seoblog.com</p>
-        `
+    let { resetPasswordLink, newPassword } = req.body
+    if (resetPasswordLink) {
+        jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, (err, decoded) => {
+            if (err) {
+                return res.status(401).json({
+                    error: 'Expired Link.Try again'
+                })
+            }
+            User.findOne({ resetPasswordLink }, async (err, user) => {
+                if (err || !user) {
+                    return res.status(401).json({
+                        error: 'Something went wrong .Try again'
+                    })
+                }
+                let salt = await bcrypt.genSalt(10);
+                newPassword = await bcrypt.hash(newPassword, salt);
+                let updatedFields = {
+                    password: newPassword,
+                    resetPasswordLink: ''
+                }
+                user = _.extend(user, updatedFields)
+                user.save((err, result) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: errorHandler(err)
+                        })
+                    }
+                    res.json({ message: `Great now you can login with your new password` })
+                })
+            })
+        })
     }
 }

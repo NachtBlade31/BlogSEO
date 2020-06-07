@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { signup, isAuth } from '../../actions/auth';
+import { signup, isAuth, preSignup } from '../../actions/auth';
 import Router from 'next/router';
-
+import Link from 'next/link';
 const SignupComponent = () => {
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const SignupComponent = () => {
 
         setFormData({ ...formData, loading: true, error: false, loading: false })
         const user = { name, email, password }
-        signup(user)
+        preSignup(user)
             .then(data => {
                 if (data.error) {
                     setFormData({ ...formData, error: data.error })
@@ -83,7 +83,12 @@ const SignupComponent = () => {
         {showError()}
         {showLoading()}
         {showMessage()}
-        {showForm && signupForm()}</React.Fragment>)
+        {showForm && signupForm()}
+        <hr />
+        <Link href="/auth/password/forgot">
+            <a className="btn btn-outline-danger btn-sm">Reset Password</a>
+        </Link>
+    </React.Fragment>)
 
 };
 

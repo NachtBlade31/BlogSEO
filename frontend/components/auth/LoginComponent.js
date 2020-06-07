@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { login, authenticate, isAuth } from '../../actions/auth';
 import Router from 'next/router';
+import Link from 'next/link';
 
 const LoginComponent = () => {
 
@@ -84,7 +85,12 @@ const LoginComponent = () => {
             {showError()}
             {showLoading()}
             {showMessage()}
-            {showForm && loginForm()}</React.Fragment>)
+            {showForm && loginForm()}
+            <hr />
+            <Link href="/auth/password/forgot">
+                <a className="btn btn-outline-danger btn-sm">Reset Password</a>
+            </Link>
+        </React.Fragment>)
 
 };
 

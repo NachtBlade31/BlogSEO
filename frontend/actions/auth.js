@@ -33,6 +33,21 @@ export const signup = (user) => {
         .catch(err => console.log(err));
 };
 
+export const preSignup = (user) => {
+    return fetch(`${API}/api/pre-signup`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => console.log(err));
+};
+
 export const login = (user) => {
     return fetch(`${API}/api/login`, {
         method: 'POST',
@@ -131,3 +146,34 @@ export const updateUser = (user, next) => {
         }
     }
 }
+
+export const forgotPassword = (email) => {
+    return fetch(`${API}/api/forget-password`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(email)
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => console.log(err));
+};
+
+
+export const resetPassword = (resetInfo) => {
+    return fetch(`${API}/api/reset-password`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(resetInfo)
+    })
+        .then(response => {
+            return response.json()
+        })
+        .catch(err => console.log(err));
+};
