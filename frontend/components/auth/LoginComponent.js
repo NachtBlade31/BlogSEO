@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { login, authenticate, isAuth } from '../../actions/auth';
 import Router from 'next/router';
 import Link from 'next/link';
-
+import LoginGoogle from './LoginGoogle'
 const LoginComponent = () => {
 
     useEffect(() => {
@@ -85,6 +85,7 @@ const LoginComponent = () => {
             {showError()}
             {showLoading()}
             {showMessage()}
+            <LoginGoogle />
             {showForm && loginForm()}
             <hr />
             <Link href="/auth/password/forgot">
